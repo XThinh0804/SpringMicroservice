@@ -1,0 +1,97 @@
+package com.ltfullstack.bookservice.command.aggregate;
+
+import com.ltfullstack.bookservice.command.command.CreateBookCommand;
+import com.ltfullstack.bookservice.command.command.DeleteBookCommand;
+import com.ltfullstack.bookservice.command.command.UpdateBookCommand;
+import com.ltfullstack.bookservice.command.event.BookCreatedEvent;
+import com.ltfullstack.bookservice.command.event.BookDeletedEvent;
+import com.ltfullstack.bookservice.command.event.BookUpdatedEvent;
+import org.axonframework.commandhandling.CommandHandler;
+import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.modelling.command.AggregateIdentifier;
+import org.axonframework.modelling.command.AggregateLifecycle;
+import org.axonframework.spring.stereotype.Aggregate;
+import org.springframework.beans.BeanUtils;
+
+@Aggregate
+public class BookAggregate {
+    @AggregateIdentifier
+    private String id;
+    private String name;
+    private String author;
+    private Boolean isReady;
+
+    public BookAggregate() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public Boolean getIsReady() {
+        return isReady;
+    }
+
+    public void setIsReady(Boolean ready) {
+        isReady = ready;
+    }
+
+    @CommandHandler
+    public BookAggregate(CreateBookCommand command){
+        BookCreatedEvent bookCreatedEvent = new BookCreatedEvent();
+        BeanUtils.copyProperties(command, bookCreatedEvent);
+        AggregateLifecycle.apply(bookCreatedEvent);
+    }
+
+    @CommandHandler
+    public void handle(UpdateBookCommand command){
+        BookUpdatedEvent bookUpdatedEvent = new BookUpdatedEvent();
+        BeanUtils.copyProperties(command, bookUpdatedEvent);
+        AggregateLifecycle.apply(bookUpdatedEvent);
+    }
+
+    @CommandHandler
+    public void handle(DeleteBookCommand command){
+        BookDeletedEvent bookDeletedEvent = new BookDeletedEvent();
+        BeanUtils.copyProperties(command, bookDeletedEvent);
+        AggregateLifecycle.apply(bookDeletedEvent);
+    }
+    @EventSourcingHandler
+    public void on(BookCreatedEvent event){
+        this.id = event.getId();
+        this.name = event.getName();
+        this.author = event.getAuthor();
+        this.isReady = event.getIsReady();
+    }
+    @EventSourcingHandler
+    public void on(BookUpdatedEvent event){
+        this.id = event.getId();
+        this.name = event.getName();
+        this.author = event.getAuthor();
+        this.isReady = event.getIsReady();
+    }
+    @EventSourcingHandler
+    public void on(BookDeletedEvent event){
+        this.id = event.getId();
+    }
+}
