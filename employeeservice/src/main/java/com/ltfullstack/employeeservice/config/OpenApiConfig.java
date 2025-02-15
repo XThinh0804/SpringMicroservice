@@ -12,8 +12,8 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 description = "Api documentation for Employee Service",
                 version = "1.0",
                 contact = @Contact(
-                        name = "Tan Thanh",
-                        email = "dotanthanhvlog@gmail.com",
+                        name = "Xuan Thinh",
+                        email = "thinha4k54cma@gmail.com",
                         url = "https://laptrinhfullstack.vercel.app"
                 ),
                 license = @License(
