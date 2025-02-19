@@ -1,4 +1,5 @@
 package com.ltfullstack.commonservice.configuration;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -9,7 +10,7 @@ public class MailConfig {
 
     @Primary
     @Bean
-    public FreeMarkerConfigurationFactoryBean factoryBean(){
+    public FreeMarkerConfigurationFactoryBean factoryBean() {
         FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
         bean.setTemplateLoaderPath("classpath:/templates");
         return bean;

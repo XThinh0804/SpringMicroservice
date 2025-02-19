@@ -9,9 +9,11 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateStatusBookCommand {
+
     @TargetAggregateIdentifier
     private String bookId;
     private Boolean isReady;
     private String employeeId;
     private String borrowingId;
+
 }

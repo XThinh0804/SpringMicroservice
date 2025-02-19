@@ -14,5 +14,4 @@ public class RollBackStatusBookCommand {
     private Boolean isReady;
     private String employeeId;
     private String borrowingId;
-
 }
